@@ -25,5 +25,19 @@ def getGeoCodeLocation(inputstring):
 def foursquare(inputstring):
 	lt, lg = getGeoCodeLocation(__user)
 	url = requests.get("https://api.foursquare.com/v2/venues/search?client_id=%s&client_secret=%s&v=20160901&ll=%f,%f&query=%s" %(key.foursquare_cli_key,key.foursquare_cli_sec,lt,lg,inputstring))
-	print json.loads(url.text)
+	data = json.loads(url.text)
+	for i in range(0,len(data['response']['venues'])):
+		__id = data['response']['venues'][i]['id']
+		url_photo = requests.get("https://api.foursquare.com/v2/venues/%s/photos?client_id=%s&client_secret=%s&v=20160901" %(__id,key.foursquare_cli_key,key.foursquare_cli_sec))
+		photo = json.loads(url_photo.text)
+		print "Name of the Store:- " + str(data['response']['venues'][i]['name'])
+		try:
+			print "Address of the Store:- " + str(data['response']['venues'][i]['location']['address'])
+		except:
+			print "No Address found though id is:- " + str(data['response']['venues'][i]['id'])
+		try:
+			print "an image to go through is :- " + photo['response']['photos']['items'][i]['prefix'] + "300x300" + photo['response']['photos']['items'][i]['suffix']
+		except:
+			print "No Image found though id is:- " + str(data['response']['venues'][i]['id'])
+
 foursquare(__meal)
