@@ -8,7 +8,7 @@ POST<--> CREATE
 PUT <--> UPDATE 
 DELETE-<-->DELETE
 
-one started we can check via the following
+once started we can check via the following
 
 curl localhost:5000/readHello
 curl -X POST  localhost:5000/createHello
