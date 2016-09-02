@@ -1,14 +1,15 @@
 #!/usr/local/bin/python2.7
+# encoding=utf8
+
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 import requests
 import json
 import key
 
-import sys
 import codecs
-
-sys.stdout = codecs.getwriter('utf8')(sys.stdout)
-sys.stderr = codecs.getwriter('utf8')(sys.stdout)
 
 __user = raw_input("please enter the address to be:- ")
 __meal = raw_input("meal type please:- ")
@@ -19,7 +20,6 @@ def getGeoCodeLocation(inputstring):
 	data = json.loads(url.text)
 	lat = data['results'][0]['geometry']['location']['lat']
 	lng = data['results'][0]['geometry']['location']['lng']
-	#print "response header: %s \n \n" % url.response
 	return (lat, lng)
 
 def foursquare(inputstring):
